@@ -1,8 +1,11 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 5.0.0', '>= 5.0.0.1'
+gem 'active_model_serializers'
 gem 'pg'
 gem 'puma', '~> 3.0'
+gem 'rack-attack'
+gem 'rack-cors'
+gem 'rails', '~> 5.0.0', '>= 5.0.0.1'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 # gem 'jbuilder', '~> 2.5'
@@ -21,14 +24,18 @@ gem 'puma', '~> 3.0'
 group :development, :test do
   # gem 'byebug', platform: :mri
   gem 'pry-byebug'
-  gem 'rspec-rails'
-  gem 'factory_girl_rails'
 end
 
 group :development do
   gem 'listen', '~> 3.0.5'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+end
+
+group :test do
+  gem 'factory_girl_rails'
+  gem 'rails-controller-testing'
+  gem 'rspec-rails'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
