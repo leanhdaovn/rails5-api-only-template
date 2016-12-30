@@ -24,5 +24,8 @@
 
 #Ignore editor configs
 .idea/
+.idea/.generators
+.idea/misc.xml
+.idea/modules.xml
 
 config/application.yml
