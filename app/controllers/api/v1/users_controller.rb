@@ -1,6 +1,7 @@
 module Api
   module V1
     class UsersController < ApiController
+      before_filter :authenticate_request!
       before_action :set_user, only: [:show, :update, :destroy]
 
       # GET /api/v1/users
