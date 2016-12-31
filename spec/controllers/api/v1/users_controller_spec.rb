@@ -25,9 +25,10 @@ RSpec.describe Api::V1::UsersController, type: :controller do
   # adjust the attributes here as well.
   let(:valid_attributes) {
     {
-      email: 'leanhdaovn@gmail.com',
-      first_name: 'Dao',
-      last_name: 'Le'
+      email: Faker::Internet.email,
+      first_name: Faker::Name.first_name,
+      last_name: Faker::Name.last_name,
+      password: Faker::Internet.password
     }
   }
 

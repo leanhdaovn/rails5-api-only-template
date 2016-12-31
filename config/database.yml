@@ -10,20 +10,20 @@ default: &default
 
 development:
   <<: *default
-  database: tilthat_development
+  database: rails5apiapp_development
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: tilthat_test<%= ENV['TEST_ENV_NUMBER'] %>
+  database: rails5apiapp_test<%= ENV['TEST_ENV_NUMBER'] %>
 
 staging:
   <<: *default
-  database: tilthat_staging
+  database: rails5apiapp_staging
 
 production:
   <<: *default
-  database: tilthat_production
+  database: rails5apiapp_production
   pool: 30
