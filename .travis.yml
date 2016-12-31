@@ -1,0 +1,26 @@
+# Travis configuration
+sudo: false
+language: ruby
+addons:
+  postgresql: 9.6
+install:
+  - bash .travis/install.sh
+cache:
+  directories:
+    - vendor/bundle
+    - node_modules
+rvm:
+  - 2.3.0
+env:
+  - TEST_SUITE=test_all
+matrix:
+  fast_finish: true
+branches:
+  only:
+    - master
+    - staging
+    - develop
+before_script:
+  - bash .travis/before_script.sh
+script:
+  - bash .travis/script.sh
