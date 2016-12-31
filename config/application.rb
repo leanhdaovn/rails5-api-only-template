@@ -9,11 +9,9 @@ require 'action_controller/railtie'
 require 'action_mailer/railtie'
 require 'action_view/railtie'
 require 'action_cable/engine'
-# require 'sprockets/railtie'
 require 'rails/test_unit/railtie'
+require 'active_model_serializers'
 
-# Require the gems listed in Gemfile, including any gems
-# you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
 module Rails5ApiApp
@@ -30,5 +28,7 @@ module Rails5ApiApp
     config.middleware.use Rack::Attack
 
     config.autoload_paths << Rails.root.join('lib')
+
+    ActiveModelSerializers.config.key_transform = :camel_lower
   end
 end

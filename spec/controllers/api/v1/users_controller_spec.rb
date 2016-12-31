@@ -19,40 +19,37 @@ require 'rails_helper'
 # that an instance is receiving a specific message.
 
 RSpec.describe Api::V1::UsersController, type: :controller do
-
-  # This should return the minimal set of attributes required to create a valid
-  # User. As you add validations to User, be sure to
-  # adjust the attributes here as well.
   let(:valid_attributes) {
     {
       email: Faker::Internet.email,
-      first_name: Faker::Name.first_name,
-      last_name: Faker::Name.last_name,
+      firstName: Faker::Name.first_name,
+      lastName: Faker::Name.last_name,
       password: Faker::Internet.password
     }
   }
 
-  let(:invalid_attributes) {
-    skip('Add a hash of attributes invalid for your model')
-  }
-
   before(:each) do
-    create_list(:user, 10)
+    @user = create(:user)
+    token = JsonWebToken.encode(user_id: User.first.id)
+    request.headers['Authorization'] = "Bearer #{token}"
+    request.headers['ACCEPT'] = 'application/json'
+    request.headers['CONTENT_TYPE'] = 'application/json'
   end
 
   describe 'GET #index' do
     it 'assigns all users as @users' do
+      create_list(:user, 4)
       get :index
       expect(response).to be_success
-      expect(json_body.length).to eq(10)
+      expect(json_body.length).to eq(5)
     end
   end
 
   describe 'GET #show' do
     it 'assigns the requested user as @user' do
-      user = User.first
-      get :show, params: {id: user.id}
-      expect(json_body['email']).to eq(user.email)
+      get :show, params: {id: @user.id}
+      expect(json_body['email']).to eq(@user.email)
+      expect(json_body['firstName']).to eq(@user.first_name)
     end
   end
 
@@ -64,6 +61,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
         }.to change(User, :count).by(1)
         user = User.last
         expect(user.email).to eq(valid_attributes[:email])
+        expect(user.first_name).to eq(valid_attributes[:firstName])
       end
     end
   end
@@ -72,26 +70,24 @@ RSpec.describe Api::V1::UsersController, type: :controller do
     context 'with valid params' do
       let(:new_attributes) {
         {
-          first_name: 'Minh',
-          last_name: 'Ton'
+          first_name: Faker::Name.first_name,
+          last_name: Faker::Name.last_name
         }
       }
 
       it 'updates the requested user' do
-        user = User.first
-        put :update, params: {id: user.id, user: new_attributes}
-        user.reload
-        expect(user.first_name).to eq(new_attributes[:first_name])
-        expect(user.last_name).to eq(new_attributes[:last_name])
+        put :update, params: {id: @user.id, user: new_attributes}
+        @user.reload
+        expect(@user.first_name).to eq(new_attributes[:first_name])
+        expect(@user.last_name).to eq(new_attributes[:last_name])
       end
     end
   end
 
   describe 'DELETE #destroy' do
     it 'destroys the requested user' do
-      user = User.first
       expect {
-        delete :destroy, params: {id: user.id}
+        delete :destroy, params: {id: @user.id}
       }.to change(User, :count).by(-1)
     end
   end
