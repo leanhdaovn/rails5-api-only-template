@@ -2,7 +2,7 @@
 sudo: false
 language: ruby
 addons:
-  postgresql: 9.6
+  postgresql: 9.4
 install:
   - bash .travis/install.sh
 cache:
